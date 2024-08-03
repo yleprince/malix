@@ -1,0 +1,37 @@
+{
+    "data":[
+        {
+            "color":"#8C7770",
+            "giftedBy":"Natacha",
+            "place": {
+                "lat": -22.9844826,
+                "lng": -43.2051266,
+                "name": "Ipanema",
+                "country": "BR",
+                "countryFR": "Brésil"
+            }
+        },
+        {
+            "color":"#816A64",
+            "giftedBy":"Yrieix",
+            "place": {
+                "lat": 42.7485128,
+                "lng": -87.7921148,
+                "name": "Racine",
+                "country": "US",
+                "countryFR": "États-Unis"
+            }
+        },
+        {
+            "color":"#6B594F",
+            "giftedBy":"Mon Anne",
+            "place": {
+                "lat": 8.250239,
+                "lng": -87.5823837,
+                "name": "Costa Rica",
+                "country": "CR",
+                "countryFR": "Costa Rica"
+            }
+        }
+    ]
+}

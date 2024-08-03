@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Malix</title>
+        <style>
+body {
+    font-family: Monserrat, sans-serif;
+    margin: 40px auto;
+    max-width: 650px;
+    color: #363636;
+    background-color: #f7f7f7;
+    padding: 0 10px
+}
+        container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .country {
+            stroke: #aaaaaa;
+            fill: rgba(0, 0, 0, 0);
+        }
+        .clickable {
+            cursor: pointer;
+        }
+        .collected {
+            fill: #a7c9a8;
+            stroke: #aaaaaa;
+            transition: 0.2s ease-in-out;
+        }
+        .highlighted {
+            fill: #5a915c;
+            stroke: #5a915c;
+            filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
+            transition: 0.2s ease-in-out;
+        }
+        #table{
+            border-collapse: collapse;
+            width: 80%;
+            border-radius: 5px;
+        }
+        td, th {
+            padding: 8px;
+        }
+        tr:nth-child(even){background-color: #ddd;}
+        .trHighlight {
+            background-color: #a7c9a8;
+        }
+        tr:hover {background-color: #a7c9a8;}
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #5a915c;
+            color: white;
+        }
+        .tableColorContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tableColorDiv {
+            width: 40px;
+            height: 15px;
+            border-radius: 5px;
+        }
+        </style>
+    </head>
+    <body>
+
+        <h1>Les sables de Malix</h1>
+        <div class="container" id="map-container">
+            <div width="960" height="500" id="map"></div>
+        </div>
+
+        <div class="container" id="table-container">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Couleur</th>
+                        <th>Pays</th>
+                        <th>Lieu</th>
+                        <th>Donné par</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div style="width: 20px; height: 15px; background-color: #8A7268;"></div></td>                     
+                        <td>France</td>
+                        <td>Paris</td>
+                        <td>Julien</td>
+                </tbody>
+            </table>
+        </div>
+        <!-- Load d3.js -->
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+
+        <script type="text/javascript" src='map.js'></script>
+        <script>
+
+            const table = document.getElementById("table");
+
+            fetch("http://localhost:8000/static/sand.json")
+                .then(response => response.json())
+                .then(json => {
+
+                    table.tBodies[0].innerHTML = json.data.map(sand => {
+                        let sandPath = document.getElementById(sand.place.country);
+                        if (sandPath) {
+                            sandPath.classList.add("collected");
+                        } 
+
+                        return `
+                            <tr class="${sand.place.country}">
+                            <td class="tableColorContainer"><div class="tableColorDiv" style=" background-color: ${sand.color};"></div></td>
+                            <td>${sand.place.countryFR}</td>
+                            <td>${sand.place.name}</td>
+                            <td>${sand.giftedBy}</td>
+                            </tr>
+                            `;
+                    }).join("");
+                
+                    
+
+                    [].slice.call(document.querySelectorAll("#table tr"), 1).forEach(tr => {
+                        const country = tr.classList.value;
+                        tr.addEventListener("mouseover", () => {
+                            document.getElementById(country).classList.add("highlighted");
+                        });
+                        tr.addEventListener("mouseout", () => {
+                            document.getElementById(country).classList.remove("highlighted");
+
+                        });
+                    });
+                });
+
+        </script>
+    </body>
+</html>
