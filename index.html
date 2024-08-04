@@ -8,7 +8,7 @@
 body {
     font-family: Monserrat, sans-serif;
     margin: 40px auto;
-    max-width: 950px;
+    max-width: 1250px;
     color: #363636;
     background-color: #f7f7f7;
     padding: 0 10px
@@ -23,6 +23,7 @@ body {
         .country {
             stroke: #aaaaaa;
             fill: rgba(0, 0, 0, 0);
+            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
         }
         .clickable {
             cursor: pointer;
@@ -35,8 +36,9 @@ body {
         .highlighted {
             fill: #5a915c;
             stroke: #5a915c;
-            filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.4));
             transition: 0.2s ease-in-out;
+            z-index: 1000;
         }
         #table{
             border-collapse: collapse;
@@ -46,7 +48,9 @@ body {
         td, th {
             padding: 8px;
         }
-        tr:nth-child(even){background-color: #ddd;}
+        tr:nth-child(even){
+            background-color: #ebebeb;
+        }
         .trHighlight {
             background-color: #a7c9a8;
         }
@@ -67,6 +71,20 @@ body {
             width: 40px;
             height: 15px;
             border-radius: 5px;
+        }
+        #picture-zoom {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+        .fade {
+            width: 300px;
+            height: 300px;
+            cursor: zoom-out;
+            border-radius: 15%; 
+            filter: drop-shadow(0px 13px 13px rgba(0, 0, 0, 0.2));
         }
         </style>
     </head>
@@ -91,32 +109,25 @@ body {
                 </tbody>
             </table>
         </div>
+        <div id="picture-zoom"></div>
         <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v5.min.js"></script>
 
-        <script type="text/javascript" src='map.js'></script>
+        <script type="text/javascript" src='static/map.js'></script>
         <script>
+            document.getElementById("picture-zoom").addEventListener("click", () => {
+                document.getElementById("picture-zoom").innerHTML = "";
+            });
 
-            function hexToRgb(hex) {
-                var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return result ? {
-                    r: parseInt(result[1], 16),
-                    g: parseInt(result[2], 16),
-                    b: parseInt(result[3], 16)
-                } : null;
-            }
             const table = document.getElementById("table");
 
-            fetch("http://localhost:8000/static/sand.json")
+            fetch("static/sand.json")
                 .then(response => response.json())
                 .then(json => {
                     let sands = json.data;
                     sands = sands.sort((a, b) => {
-                        const a_ = hexToRgb(a.color)
-                        const b_ = hexToRgb(b.color)
-                        return a_.r + a_.g + a_.b - b_.r - b_.g - b_.b;
+                        return a.place.countryFR.localeCompare(b.place.countryFR);
                     });
-
 
                     table.tBodies[0].innerHTML = sands.map(sand => {
                         let sandPath = document.getElementById(sand.place.country);
@@ -126,7 +137,7 @@ body {
 
                         return `
                             <tr class="${sand.place.country}">
-                            <td class="tableColorContainer"><div class="tableColorDiv" style=" background-color: ${sand.color};"></div></td>
+                            <td class="tableColorContainer"><div class="tableColorDiv" style="background-image: url('https:\/\/sand-collection.s3.eu-central-1.amazonaws.com\/zoom\/${sand.picture}');"></div></td>
                             <td>${sand.place.countryFR}</td>
                             <td>${sand.place.name}</td>
                             <td>${sand.giftedBy}</td>
@@ -137,14 +148,20 @@ body {
                 
                     
 
+                    const pictureZoom = document.getElementById("picture-zoom");
                     [].slice.call(document.querySelectorAll("#table tr"), 1).forEach(tr => {
                         const country = tr.classList.value;
                         tr.addEventListener("mouseover", () => {
-                            document.getElementById(country).classList.add("highlighted");
+                            if (country){
+                                document.getElementById(country).classList.add("highlighted");
+                            }
+                            pictureZoom.innerHTML = `<img class="fade" src="${tr.querySelector("a").href}" width="400" height="400">`;
+                            console.log(tr.querySelector("a").href);
                         });
                         tr.addEventListener("mouseout", () => {
-                            document.getElementById(country).classList.remove("highlighted");
-
+                            if (country){
+                                document.getElementById(country).classList.remove("highlighted");
+                            }
                         });
                     });
                 });
