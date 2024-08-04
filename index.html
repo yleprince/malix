@@ -121,13 +121,20 @@ body {
 
             const table = document.getElementById("table");
 
-            fetch("static/sand.json")
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+            const loadSands = async () => {
+                await delay(300);
+                console.log("Waited 1s");
+            };
+            loadSands().then(() => {
+             fetch("static/sand.json")
                 .then(response => response.json())
                 .then(json => {
                     let sands = json.data;
                     sands = sands.sort((a, b) => {
                         return a.place.countryFR.localeCompare(b.place.countryFR);
                     });
+
 
                     table.tBodies[0].innerHTML = sands.map(sand => {
                         let sandPath = document.getElementById(sand.place.country);
@@ -146,25 +153,27 @@ body {
                             `;
                     }).join("");
                 
+            });
+               
                     
 
-                    const pictureZoom = document.getElementById("picture-zoom");
-                    [].slice.call(document.querySelectorAll("#table tr"), 1).forEach(tr => {
-                        const country = tr.classList.value;
-                        tr.addEventListener("mouseover", () => {
-                            if (country){
-                                document.getElementById(country).classList.add("highlighted");
-                            }
-                            pictureZoom.innerHTML = `<img class="fade" src="${tr.querySelector("a").href}" width="400" height="400">`;
-                            console.log(tr.querySelector("a").href);
-                        });
-                        tr.addEventListener("mouseout", () => {
-                            if (country){
-                                document.getElementById(country).classList.remove("highlighted");
-                            }
-                        });
+                const pictureZoom = document.getElementById("picture-zoom");
+                [].slice.call(document.querySelectorAll("#table tr"), 1).forEach(tr => {
+                    const country = tr.classList.value;
+                    tr.addEventListener("mouseover", () => {
+                        if (country){
+                            document.getElementById(country).classList.add("highlighted");
+                        }
+                        pictureZoom.innerHTML = `<img class="fade" src="${tr.querySelector("a").href}" width="400" height="400">`;
+                        console.log(tr.querySelector("a").href);
+                    });
+                    tr.addEventListener("mouseout", () => {
+                        if (country){
+                            document.getElementById(country).classList.remove("highlighted");
+                        }
                     });
                 });
+            });
 
         </script>
     </body>
