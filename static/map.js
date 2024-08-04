@@ -1,5 +1,10 @@
-const m_width = document.getElementById("map-container").offsetWidth*.8;
+let m_width = document.getElementById("map-container").offsetWidth*.8;
+if (m_width > 800) {
+    m_width = 800;
+}
+
 const m_height = m_width * 0.6;
+console.log(m_width, m_height);
 
 const map = d3.select('#map').append("svg")
     .attr("id", "svg")
@@ -43,7 +48,6 @@ d3.json("static/world.json")
                 }
             })
             .on("mouseout", function (d) {
-
                 this.classList.remove("highlighted");
                 const toHighlight = document.getElementsByClassName(d.id);
                 if (toHighlight) {

@@ -1,25 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="retro">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Malix</title>
         <style>
 body {
-    font-family: Monserrat, sans-serif;
     margin: 40px auto;
     max-width: 1250px;
-    color: #363636;
-    background-color: #f7f7f7;
     padding: 0 10px
 }
-        container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
         .country {
             stroke: #aaaaaa;
             fill: rgba(0, 0, 0, 0);
@@ -29,96 +19,83 @@ body {
             cursor: pointer;
         }
         .collected {
-            fill: #a7c9a8;
+            fill: #5A675E;
             stroke: #aaaaaa;
             transition: 0.2s ease-in-out;
         }
         .highlighted {
-            fill: #5a915c;
-            stroke: #5a915c;
+            fill: #A4CBB4;
+            stroke: #A4CBB4;
             filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.4));
             transition: 0.2s ease-in-out;
             z-index: 1000;
-        }
-        #table{
-            border-collapse: collapse;
-            width: 80%;
-            border-radius: 5px;
-        }
-        td, th {
-            padding: 8px;
-        }
-        tr:nth-child(even){
-            background-color: #ebebeb;
-        }
-        .trHighlight {
-            background-color: #a7c9a8;
-        }
-        tr:hover {background-color: #a7c9a8;}
-        th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #5a915c;
-            color: white;
-        }
-        .tableColorContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .tableColorDiv {
             width: 40px;
             height: 15px;
             border-radius: 5px;
         }
-        #picture-zoom {
+        #zoom-menu {
             position: fixed;
-            top: 40px;
-            right: 40px;
+            top: 20px;
+            right: 20px; 
+            width: 200px;
+            height: 100%;
             justify-content: center;
             align-items: center;
         }
-        .fade {
-            width: 300px;
-            height: 300px;
+        .card {
+            z-index: 10;
             cursor: zoom-out;
-            border-radius: 15%; 
-            filter: drop-shadow(0px 13px 13px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.3));
+        }
+        .card img {
+            width: 100%;
+            border-radius: 15px 15px 0 0;
+        }
+        .cardText {
+            padding: 2px 16px;
+            background-color: white;
+            border-radius: 0 0 15px 15px;
+        }
+        #map-container {
+        }
+        #map {
         }
         </style>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     </head>
     <body>
-        <h1>Les sables de Malix</h1>
+        <h1 class="text-5xl font-medium tracking-wide">Les sables de Malix</h1>
         <div class="container" id="map-container">
-            <div width="960" height="500" id="map"></div>
+            <div id="map"></div>
         </div>
 
-        <div class="container" id="table-container">
-            <table id="table">
-                <thead>
-                    <tr>
-                        <th>Couleur</th>
-                        <th>Pays</th>
-                        <th>Lieu</th>
-                        <th>Donné par</th>
-                        <th>Photo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        <div class="">
+            <div class="h-96 overflow-x-auto">
+                <table id="table" class="table table-xs table-pin-rows table-pin-cols" >
+                    <thead>
+                        <tr class="bg-secondary">
+                            <th class="bg-secondary">Couleur</th>
+                            <th class="bg-secondary">Pays</th>
+                            <th class="bg-secondary">Lieu</th>
+                            <th class="bg-secondary">Ramassé par</th>
+                            <th class="bg-secondary">Photo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div id="picture-zoom"></div>
+        <div id="zoom-menu">
+        </div>
         <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v5.min.js"></script>
 
         <script type="text/javascript" src='static/map.js'></script>
         <script>
-            document.getElementById("picture-zoom").addEventListener("click", () => {
-                document.getElementById("picture-zoom").innerHTML = "";
-            });
-
             const table = document.getElementById("table");
 
             const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -126,55 +103,68 @@ body {
                 await delay(300);
                 console.log("Waited 1s");
             };
-            loadSands().then(() => {
-             fetch("static/sand.json")
-                .then(response => response.json())
-                .then(json => {
-                    let sands = json.data;
-                    sands = sands.sort((a, b) => {
-                        return a.place.countryFR.localeCompare(b.place.countryFR);
-                    });
+            loadSands()
+                .then(
+                    () => {
+                        fetch("static/sand.json")
+                            .then(response => response.json())
+                            .then(json => {
+                                let sands = json.data;
+                                sands = sands.sort((a, b) => {
+                                    return a.place.countryFR.localeCompare(b.place.countryFR);
+                                });
 
 
-                    table.tBodies[0].innerHTML = sands.map(sand => {
-                        let sandPath = document.getElementById(sand.place.country);
-                        if (sandPath) {
-                            sandPath.classList.add("collected");
-                        } 
+                                table.tBodies[0].innerHTML = sands.map(sand => {
+                                    let sandPath = document.getElementById(sand.place.country);
+                                    if (sandPath) {
+                                        sandPath.classList.add("collected");
+                                    } 
 
-                        return `
-                            <tr class="${sand.place.country}">
-                            <td class="tableColorContainer"><div class="tableColorDiv" style="background-image: url('https:\/\/sand-collection.s3.eu-central-1.amazonaws.com\/zoom\/${sand.picture}');"></div></td>
-                            <td>${sand.place.countryFR}</td>
-                            <td>${sand.place.name}</td>
-                            <td>${sand.giftedBy}</td>
-                            <td><a href="https://sand-collection.s3.eu-central-1.amazonaws.com/${sand.picture}">photo</a></td>
-                            </tr>
-                            `;
-                    }).join("");
-                
-            });
-               
-                    
+                                    return `
+                                        <tr class="${sand.place.country}">
+                                        <td class="tableColorContainer"><div class="tableColorDiv" style="background-image: url('https:\/\/sand-collection.s3.eu-central-1.amazonaws.com\/zoom\/${sand.picture}');"></div></td>
+                                        <td>${sand.place.countryFR}</td>
+                                        <td>${sand.place.name}</td>
+                                        <td>${sand.giftedBy}</td>
+                                        <td><a class="link" href="https://sand-collection.s3.eu-central-1.amazonaws.com/${sand.picture}">photo</a></td>
+                                        </tr>
+                                        `;
+                                }).join("");
 
-                const pictureZoom = document.getElementById("picture-zoom");
-                [].slice.call(document.querySelectorAll("#table tr"), 1).forEach(tr => {
-                    const country = tr.classList.value;
-                    tr.addEventListener("mouseover", () => {
-                        if (country){
-                            document.getElementById(country).classList.add("highlighted");
+                                const zoomMenu = document.getElementById("zoom-menu");
+                                [].slice
+                                    .call(document.querySelectorAll("#table tr"), 1)
+                                    .forEach(tr => {
+                                        const country = tr.classList.value;
+                                        tr.addEventListener("mouseover", () => {
+                                            if (country){
+                                                document.getElementById(country).classList.add("highlighted");
+                                            }
+
+                                            zoomMenu.innerHTML = `
+                                                <div class="card fade">
+                                                <img src='${tr.querySelector("a").href.replace("PXL", "resized_200/PXL")}' alt="photo">
+                                                <div class="cardText">
+                                                <h4 class="text-lg font-bold">${tr.children[1].innerText}</h4>
+                                                <h5 class="italic">${tr.children[2].innerText}</h5>
+                                                <p class="text-sm text-secondary-content">${tr.children[3].innerText}</p>
+                                                </div>
+                                                </div>
+                                                `;
+                                        });
+                                        tr.addEventListener("mouseout", () => {
+                                            if (country){
+                                                document.getElementById(country).classList.remove("highlighted");
+                                            }
+                                        });
+                                    });
+                            });
+                    }).catch(
+                        (error) => {
+                            console.log(error);
                         }
-                        pictureZoom.innerHTML = `<img class="fade" src="${tr.querySelector("a").href}" width="400" height="400">`;
-                        console.log(tr.querySelector("a").href);
-                    });
-                    tr.addEventListener("mouseout", () => {
-                        if (country){
-                            document.getElementById(country).classList.remove("highlighted");
-                        }
-                    });
-                });
-            });
-
+                    );
         </script>
     </body>
 </html>
