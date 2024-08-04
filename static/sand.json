@@ -3,11 +3,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171102014.jpg",
-            "color":"",
+            "color":"#653C23",
             "giftedBy":"Gralland",
             "place": {
                 "name": "Terre de Birmanie",
-                "country": "",
+                "country": "MM",
                 "countryFR": "Birmanie"
             },
             "year": 2014
@@ -15,33 +15,33 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171114498.jpg",
-            "color":"",
+            "color":"#8A7B6A",
             "giftedBy":"Rémi et Janina",
             "place": {
                 "name": "Tallinn",
-                "country": "",
+                "country": "EE",
                 "countryFR": "Estonie"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171131302.jpg",
-            "color":"",
+            "color":"#5C544E",
             "giftedBy":"",
             "place": {
                 "name": "Île d'Orléans",
-                "country": "",
+                "country": "CA",
                 "countryFR": "Canada"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171144938.jpg",
-            "color":"",
+            "color":"#AA9D8B",
             "giftedBy":"",
             "place": {
                 "name": "Détroit de Magellan",
-                "country": "",
+                "country": "CL",
                 "countryFR": "Chili"
             }
         },
@@ -49,7 +49,7 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171157945.jpg",
-            "color":"",
+            "color":"#B69362",
             "giftedBy":"Marie Carlier",
             "place": {
                 "name": "Lac Yosemite",
@@ -62,11 +62,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171209111.jpg",
-            "color":"",
-            "giftedBy":"(?), Gildas",
+            "color":"#787066",
+            "giftedBy":"Marine (Gildas)",
             "place": {
                 "name": "Lipah Beach, Bali",
-                "country": "",
+                "country": "ID",
                 "countryFR": "Indonésie"
             }
         },
@@ -74,11 +74,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171220603.jpg",
-            "color":"",
+            "color":"#A59986",
             "giftedBy":"",
             "place": {
                 "name": "Torrent de l'Arve, Chamonix",
-                "country": "",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
@@ -86,11 +86,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171230743.jpg",
-            "color":"",
+            "color":"#9D7955",
             "giftedBy":"A?",
             "place": {
                 "name": "Nouvelle Calédonie, Nouméa",
-                "country": "",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
@@ -98,11 +98,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171244214.jpg",
-            "color":"",
+            "color":"#7B7163",
             "giftedBy":"Clotilde (Guilhem)",
             "place": {
                 "name": "Lac Shala",
-                "country": "",
+                "country": "ET",
                 "countryFR": "Ethiopie"
             }
         },
@@ -110,11 +110,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171251899.jpg",
-            "color":"",
+            "color":"#B29E85",
             "giftedBy":"",
             "place": {
-                "name": "La Martinique",
-                "country": "",
+                "name": "Martinique",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
@@ -122,11 +122,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171304257.jpg",
-            "color":"",
+            "color":"#352F27",
             "giftedBy":"JB Gralland",
             "place": {
                 "name": "Etna, Sicile",
-                "country": "",
+                "country": "IT",
                 "countryFR": "Italie"
             }
         },
@@ -134,11 +134,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171314337.jpg",
-            "color":"",
+            "color":"#8C806F",
             "giftedBy":"Clotilde (Guilhem)",
             "place": {
                 "name": "Lac Langano",
-                "country": "",
+                "country": "ET",
                 "countryFR": "Ethiopie"
             }
         },
@@ -146,7 +146,7 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171329887.jpg",
-            "color":"",
+            "color":"#A1855D",
             "giftedBy":"Clothilde de Manval",
             "place": {
                 "name": "Cap-Vert",
@@ -158,11 +158,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171338397.jpg",
-            "color":"",
+            "color":"#99876E",
             "giftedBy":"Charlie",
             "place": {
                 "name": "Valence",
-                "country": "",
+                "country": "ES",
                 "countryFR": "Espagne"
             }
         },
@@ -170,33 +170,33 @@
         {
             "storage":1,
             "picture": "PXL_20240803_183014633.jpg",
-            "color":"",
+            "color":"#9A7E5A",
             "giftedBy":"Catherine et Georges Buridard",
             "place": {
                 "name": "Ile de Tioman",
-                "country": "",
+                "country": "MY",
                 "countryFR": "Malaisie"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171358876.jpg",
-            "color":"",
+            "color":"#7E6950",
             "giftedBy":"Dany et Sabine",
             "place": {
                 "name": "Negombo, cote ouest",
-                "country": "",
+                "country": "LK",
                 "countryFR": "Sri Lanka"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171408900.jpg",
-            "color":"",
+            "color":"#AA885D",
             "giftedBy":"Collègues de Rémi",
             "place": {
                 "name": "Inde",
-                "country": "",
+                "country": "IN",
                 "countryFR": "Inde"
             }
         },
@@ -204,11 +204,11 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171419508.jpg",
-            "color":"",
+            "color":"#3F3B36",
             "giftedBy":"",
             "place": {
                 "name": "Tré les Eaux, Chamonix",
-                "country": "",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
@@ -216,18 +216,18 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171433539.jpg",
-            "color":"",
+            "color":"#847158",
             "giftedBy":"",
             "place": {
                 "name": "Tenerife",
-                "country": "",
+                "country": "ES",
                 "countryFR": "Espagne"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171505829.jpg",
-            "color":"",
+            "color":"#87755E",
             "giftedBy":"",
             "place": {
                 "name": "",
@@ -239,18 +239,18 @@
         {
             "storage":1,
             "picture": "PXL_20240803_190710231.jpg",
-            "color":"",
+            "color":"#9F8A6F",
             "giftedBy":"Buridard",
             "place": {
                 "name": "Agar? Mer des Caraïbes",
-                "country": "",
+                "country": "CU",
                 "countryFR": "Cuba"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171517041.jpg",
-            "color":"",
+            "color":"#A08C6E",
             "giftedBy":"Natacha",
             "place": {
                 "name": "San Diego",
@@ -261,96 +261,96 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171529260.jpg",
-            "color":"",
+            "color":"#56514A",
             "giftedBy":"Caroline",
             "place": {
                 "name": "Playa de Janubio, Lanzarote, Canaries",
-                "country": "",
+                "country": "ES",
                 "countryFR": "Espagne"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171544622.jpg",
-            "color":"",
+            "color":"#8C693F",
             "giftedBy":"Les Dnck?",
             "place": {
                 "name": "Carrière de Silsilah",
-                "country": "",
+                "country": "EG",
                 "countryFR": "Égypte"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171557103.jpg",
-            "color":"",
+            "color":"#706150",
             "giftedBy":"Natacha",
             "place": {
                 "name": "Martinique",
-                "country": "",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171607701.jpg",
-            "color":"",
+            "color":"#9C8466",
             "giftedBy":"Sylvie Mariaud",
             "place": {
                 "name": "Ile de Phu Quoc",
-                "country": "",
+                "country": "VN",
                 "countryFR": "Vietnam"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_184121536.jpg",
-            "color":"",
+            "color":"#917052",
             "giftedBy":"Sabine",
             "place": {
                 "name": "Tassili du Hoggar",
-                "country": "",
+                "country": "DZ",
                 "countryFR": "Algérie"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171631828.jpg",
-            "color":"",
+            "color":"#56514A",
             "giftedBy":"Mon Anne?",
             "place": {
                 "name": "Islande",
-                "country": "",
+                "country": "IS",
                 "countryFR": "Islande"
             }
         },
         {
             "storage":1,
             "picture": "PXL_20240803_171643478.jpg",
-            "color":"",
+            "color":"#AD9671",
             "giftedBy":"",
             "place": {
                 "name": "Dune du Pilat",
-                "country": "",
+                "country": "FR",
                 "countryFR": "France"
             }
         },
 {
             "storage":1,
-            "color":"",
+            "color":"#B7A389",
             "picture": "PXL_20240803_171655397.jpg",
             "giftedBy":"Julien",
             "place": {
                 "name": "Saint Domingue",
-                "country": "",
+                "country": "DO",
                 "countryFR": "République Dominicaine"
-            },
+            }
         },
 
         {
             "storage":1,
-            "color":"",
-            "picture": "PXL_20240803_171707366.jpg",
+            "color":"#5C5448",
+            "picture": "PXL_20240803_184950045.jpg",
             "giftedBy":"Caroline et Yrieix",
             "place": {
                 "name": "Playa Hermosa",
@@ -363,13 +363,13 @@
         {
             "storage":1,
             "picture": "PXL_20240803_171718763.jpg",
-            "color":"",
+            "color":"#7B6647",
             "giftedBy":"Sarah",
             "place": {
                 "name": "Ile de Santiago",
                 "country": "",
                 "countryFR": "République du Cap-Vert"
             }
-        },
+        }
     ]
 }

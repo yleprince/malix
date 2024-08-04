@@ -8,7 +8,7 @@
 body {
     font-family: Monserrat, sans-serif;
     margin: 40px auto;
-    max-width: 650px;
+    max-width: 950px;
     color: #363636;
     background-color: #f7f7f7;
     padding: 0 10px
@@ -71,7 +71,6 @@ body {
         </style>
     </head>
     <body>
-
         <h1>Les sables de Malix</h1>
         <div class="container" id="map-container">
             <div width="960" height="500" id="map"></div>
@@ -85,14 +84,10 @@ body {
                         <th>Pays</th>
                         <th>Lieu</th>
                         <th>Donné par</th>
+                        <th>Photo</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><div style="width: 20px; height: 15px; background-color: #8A7268;"></div></td>                     
-                        <td>France</td>
-                        <td>Paris</td>
-                        <td>Julien</td>
                 </tbody>
             </table>
         </div>
@@ -102,13 +97,28 @@ body {
         <script type="text/javascript" src='map.js'></script>
         <script>
 
+            function hexToRgb(hex) {
+                var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? {
+                    r: parseInt(result[1], 16),
+                    g: parseInt(result[2], 16),
+                    b: parseInt(result[3], 16)
+                } : null;
+            }
             const table = document.getElementById("table");
 
             fetch("http://localhost:8000/static/sand.json")
                 .then(response => response.json())
                 .then(json => {
+                    let sands = json.data;
+                    sands = sands.sort((a, b) => {
+                        const a_ = hexToRgb(a.color)
+                        const b_ = hexToRgb(b.color)
+                        return a_.r + a_.g + a_.b - b_.r - b_.g - b_.b;
+                    });
 
-                    table.tBodies[0].innerHTML = json.data.map(sand => {
+
+                    table.tBodies[0].innerHTML = sands.map(sand => {
                         let sandPath = document.getElementById(sand.place.country);
                         if (sandPath) {
                             sandPath.classList.add("collected");
@@ -120,6 +130,7 @@ body {
                             <td>${sand.place.countryFR}</td>
                             <td>${sand.place.name}</td>
                             <td>${sand.giftedBy}</td>
+                            <td><a href="https://sand-collection.s3.eu-central-1.amazonaws.com/${sand.picture}">photo</a></td>
                             </tr>
                             `;
                     }).join("");
