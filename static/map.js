@@ -25,6 +25,7 @@ const cGroup = map.append("g");
 
 d3.json("static/world.json")
     .then((geojson) => {
+        console.log("toto")
         const b = path.bounds(geojson);
         const s = 1 / Math.max((b[1][0] - b[0][0]) / m_width, (b[1][1] - b[0][1]) / m_height);
         const t = [(m_width - s * (b[1][0] + b[0][0])) / 2, (m_height - s * (b[1][1] + b[0][1])) / 2];
@@ -42,6 +43,7 @@ d3.json("static/world.json")
             .attr("class", "country clickable")
             .on("mouseover", function (d) {
                 this.classList.add("highlighted");
+                console.log(d.id);
                 const toHighlight = document.getElementsByClassName(d.id);
                 if (toHighlight) {
                     Array.from(toHighlight).forEach(e => e.classList.add("trHighlight"));
