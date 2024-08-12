@@ -1,0 +1,53 @@
+body {
+}
+.country {
+    stroke: #aaaaaa;
+    fill: rgba(0, 0, 0, 0);
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
+}
+.clickable {
+    cursor: pointer;
+}
+.collected {
+    fill: #5A675E;
+    stroke: #aaaaaa;
+    transition: 0.2s ease-in-out;
+}
+.highlighted {
+    fill: #A4CBB4;
+    stroke: #A4CBB4;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.4));
+    transition: 0.2s ease-in-out;
+    z-index: 1000;
+}
+.tableColorDiv {
+    width: 40px;
+    height: 15px;
+    border-radius: 5px;
+}
+#zoom-menu {
+    position: fixed;
+    top: 20px;
+    right: 20px; 
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    z-index: 10;
+    width: 200px;
+    cursor: zoom-out;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.3));
+}
+.card img {
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+}
+.cardText {
+    padding: 2px 16px;
+    background-color: white;
+    border-radius: 0 0 15px 15px;
+}
+#map-container {
+}
+#map {
+}

@@ -1,69 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="retro">
+<html lang="fr" data-theme="retro">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Malix</title>
-        <style>
-body {
-    margin: 40px auto;
-    max-width: 1250px;
-    padding: 0 10px
-}
-        .country {
-            stroke: #aaaaaa;
-            fill: rgba(0, 0, 0, 0);
-            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
-        }
-        .clickable {
-            cursor: pointer;
-        }
-        .collected {
-            fill: #5A675E;
-            stroke: #aaaaaa;
-            transition: 0.2s ease-in-out;
-        }
-        .highlighted {
-            fill: #A4CBB4;
-            stroke: #A4CBB4;
-            filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.4));
-            transition: 0.2s ease-in-out;
-            z-index: 1000;
-        }
-        .tableColorDiv {
-            width: 40px;
-            height: 15px;
-            border-radius: 5px;
-        }
-        #zoom-menu {
-            position: fixed;
-            top: 20px;
-            right: 20px; 
-            justify-content: center;
-            align-items: center;
-        }
-        .card {
-            z-index: 10;
-            width: 200px;
-            cursor: zoom-out;
-            filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.3));
-        }
-        .card img {
-            width: 100%;
-            border-radius: 15px 15px 0 0;
-        }
-        .cardText {
-            padding: 2px 16px;
-            background-color: white;
-            border-radius: 0 0 15px 15px;
-        }
-        #map-container {
-        }
-        #map {
-        }
-        </style>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+        <link rel="stylesheet" href="static/daisy.min.css">
+        <script src="static/tailwindAndTypo.js"></script>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1 class="text-5xl font-medium tracking-wide">Les sables de Malix</h1>
@@ -91,7 +34,7 @@ body {
         <div id="zoom-menu">
         </div>
         <!-- Load d3.js -->
-        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="static/d3.v5.min.js"></script>
 
         <script type="text/javascript" src='static/map.js'></script>
         <script>

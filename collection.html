@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="retro">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Malix</title>
+        <link rel="stylesheet" href="static/daisy.min.css">
+        <script src="static/tailwindAndTypo.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="w-full flex flex-col">
+            <div class="flex items-center justify-center">
+                <h1 class="w-6/12 text-5xl font-medium p-12">La Collection</h1>
+            </div>
+            <div class="tracking-wide flex items-center justify-center p-10">
+                <div id="collection" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8 xl:gap-10"></div>
+            </div>
+        </div>
+
+        <!-- Load d3.js -->
+        <script src="static/d3.v5.min.js"></script>
+        <script>
+            const collection = document.getElementById("collection");
+
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+            const loadSands = async () => {
+                await delay(300);
+                console.log("Waited 1s");
+            };
+            loadSands()
+                .then(
+                    () => {
+                        fetch("static/sand.json")
+                            .then(response => response.json())
+                            .then(json => {
+                                let sands = json.data;
+                                sands = sands.sort((a, b) => {
+                                    return a.place.countryFR.localeCompare(b.place.countryFR);
+                                });
+
+                                collection.innerHTML = sands.map(sand => {
+                                    const url = "https://sand-collection.s3.eu-central-1.amazonaws.com/resized_200"
+                                    const year = sand.year?` - ${sand.year}`:''
+                                    return `
+                                        <div class="card">
+                                        <img src='${url}/${sand.picture}' alt="photo">
+                                        <div class="cardText">
+                                        <h4 class="text-lg font-bold">${sand.place.countryFR}</h4>
+                                        <h5 class="italic">${sand.place.name}</h5>
+                                        <p class="text-sm text-secondary-content">${sand.giftedBy}${year}</p>
+                                        </div>
+                                        </div>
+                                        `;
+
+                                }).join("");
+                            }).catch(
+                                (error) => {
+                                    console.log(error);
+                                }
+                            );
+                    })
+        </script>
+    </body>
+</html>
