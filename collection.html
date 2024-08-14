@@ -36,8 +36,13 @@
                             .then(response => response.json())
                             .then(json => {
                                 let sands = json.data;
-                                sands = sands.sort((a, b) => {
+                                sands.sort((a, b) => {
                                     return a.place.countryFR.localeCompare(b.place.countryFR);
+                                });
+                                const noCountry = sands.filter(sand => !sand.place.countryFR)
+                                sands = sands.filter(sand => sand.place.countryFR)
+                                noCountry.forEach(sand => {
+                                    sands.push(sand);
                                 });
 
                                 collection.innerHTML = sands.map(sand => {

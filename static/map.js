@@ -1,60 +1,127 @@
-let m_width = document.getElementById("map-container").offsetWidth*.8;
-if (m_width > 800) {
-    m_width = 800;
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+loadSand = async () => await fetch("static/sand.json")
+    .then(response => response.json())
+    .then(json => {
+        let sands = json.data;
+        sands.sort((a, b) => {
+            return a.place.countryFR.localeCompare(b.place.countryFR);
+        });
+        const noCountry = sands.filter(sand => !sand.place.countryFR)
+        sands = sands.filter(sand => sand.place.countryFR)
+        noCountry.forEach(sand => {
+            sands.push(sand);
+        });
+
+        return sands
+    })
+
+showSelectedSands = (countryName, selected) => {
+    const statsDiv = document.getElementById("stats")
+    statsDiv.style.display = "block";
+    if (selected.length === 0) {
+        statsDiv.style.display = "none"; 
+    }
+    const nbSands = document.getElementById("stat-nb-sands");
+    const nbCollectors = document.getElementById("stat-nb-collectors");
+
+    const title = document.getElementById("selected-country");
+    title.innerHTML = countryName;
+    nbSands.innerHTML = selected.length;
+    nbCollectors.innerHTML = new Set(selected.map(sand => sand.giftedBy)).size
+
+    const collection = document.getElementById("collection");
+    collection.innerHTML = selected.map(sand => {
+        const url = "https://sand-collection.s3.eu-central-1.amazonaws.com/resized_200"
+        const year = sand.year?` - ${sand.year}`:''
+        return `
+            <div class="card">
+            <img src='${url}/${sand.picture}' alt="photo">
+            <div class="cardText">
+            <h4 class="text-lg font-bold">${sand.place.name}</h4>
+            <p class="text-sm text-secondary-content">${sand.giftedBy}${year}</p>
+            </div>
+            </div>
+            `;
+    }).join("");
 }
 
-const m_height = m_width * 0.6;
-console.log(m_width, m_height);
+function buildMap(highlighted = null) {
+    let oldmap = document.getElementById("map-svg")
+    if (oldmap) {
+        oldmap.remove();
+    }
 
-const map = d3.select('#map').append("svg")
-    .attr("id", "svg")
-    .attr("class", "svg")
-    .attr("width", m_width)
-    .attr("height", m_height);
+    let [m_width, m_height] = getSizes();
+    const map = d3.select('#map').append("svg")
+        .attr("id", "map-svg")
+        .attr("width", m_width)
+        .attr("height", m_height);
 
-const projection = d3.geoNaturalEarth1()
-    .scale(1)
-    .translate([0, 0]);
+    const projection = d3.geoNaturalEarth1()
+        .scale(1)
+        .translate([0, 0]);
 
-const path = d3.geoPath()
-    .pointRadius(2)
-    .projection(projection);
+    const path = d3.geoPath()
+        .pointRadius(2)
+        .projection(projection);
 
-const cGroup = map.append("g");
+    const cGroup = map.append("g");
 
+    d3.json("static/world.json")
+        .then((geojson) => {
+            const b = path.bounds(geojson);
+            const s = 1 / Math.max((b[1][0] - b[0][0]) / m_width, (b[1][1] - b[0][1]) / m_height);
+            const t = [(m_width - s * (b[1][0] + b[0][0])) / 2, (m_height - s * (b[1][1] + b[0][1])) / 2];
 
-d3.json("static/world.json")
-    .then((geojson) => {
-        console.log("toto")
-        const b = path.bounds(geojson);
-        const s = 1 / Math.max((b[1][0] - b[0][0]) / m_width, (b[1][1] - b[0][1]) / m_height);
-        const t = [(m_width - s * (b[1][0] + b[0][0])) / 2, (m_height - s * (b[1][1] + b[0][1])) / 2];
+            projection
+                .scale(s)
+                .translate(t);
 
-        projection
-            .scale(s)
-            .translate(t);
-
-        cGroup.selectAll("path")
-            .data(geojson.features)
-            .enter()
-            .append("path")
-            .attr("d", path)
-            .attr("id", (d) => d.id)
-            .attr("class", "country clickable")
-            .on("mouseover", function (d) {
-                this.classList.add("highlighted");
-                console.log(d.id);
-                const toHighlight = document.getElementsByClassName(d.id);
-                if (toHighlight) {
-                    Array.from(toHighlight).forEach(e => e.classList.add("trHighlight"));
+            cGroup.selectAll("path")
+                .data(geojson.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .attr("id", (d) => d.id)
+                .attr("class", "country clickable")
+           return loadSand();
+        })
+        .then((sands) => {
+            cGroup.selectAll("path")
+                .on("click", function (d) {
+                    Array.from(document.getElementsByClassName("highlighted")).forEach(e => e.classList.remove("highlighted"));
+                    this.classList.add("highlighted");
+                    showSelectedSands(d.properties.name, sands.filter(sand => sand.place.country === d.id));
+                });
+ 
+            if (highlighted) {
+                highlighted.forEach(e => {
+                    const toHighLight = document.getElementById(e.id);
+                    if (toHighLight){
+                        toHighLight.classList.add("highlighted");
+                    }
+                });
+            }
+            new Set(sands.map(s => s.place.country)).forEach(country => {
+                const countryPath = document.getElementById(country);
+                if (countryPath) {
+                    countryPath.classList.add("collected");
                 }
             })
-            .on("mouseout", function (d) {
-                this.classList.remove("highlighted");
-                const toHighlight = document.getElementsByClassName(d.id);
-                if (toHighlight) {
-                    Array.from(toHighlight).forEach(e => e.classList.remove("trHighlight"));
-                }
-            })
-        ;
-    });
+        })
+}
+
+getSizes = () => {
+    let width = Math.min(document.getElementById("map").offsetWidth*0.9, 1200);
+    return [width, width * 0.6];
+}
+buildMap();
+
+onresize = () => {
+    let highlighted = Array.from(document.getElementsByClassName("highlighted"))
+    buildMap(highlighted);
+};
+
+

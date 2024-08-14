@@ -9,15 +9,14 @@ body {
     cursor: pointer;
 }
 .collected {
-    fill: #5A675E;
-    stroke: #aaaaaa;
-    transition: 0.2s ease-in-out;
+    fill: #A4CBB4;
+    transition: 0.4s ease-in-out;
 }
 .highlighted {
-    fill: #A4CBB4;
-    stroke: #A4CBB4;
-    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.4));
-    transition: 0.2s ease-in-out;
+    fill: #EF9995;
+    stroke: #EF9995;
+    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.3));
+    transition: 0.4s ease-in-out;
     z-index: 1000;
 }
 .tableColorDiv {
@@ -46,8 +45,4 @@ body {
     padding: 2px 16px;
     background-color: white;
     border-radius: 0 0 15px 15px;
-}
-#map-container {
-}
-#map {
 }
