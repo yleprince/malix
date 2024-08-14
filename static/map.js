@@ -13,7 +13,6 @@ loadSand = async () => await fetch("static/sand.json")
         noCountry.forEach(sand => {
             sands.push(sand);
         });
-
         return sands
     })
 
@@ -110,7 +109,18 @@ function buildMap(highlighted = null) {
                     countryPath.classList.add("collected");
                 }
             })
+            return sands
         })
+    .then((sands) => {
+        const fr = document.getElementById('FR');
+        if (fr) {
+            fr.classList.add("highlighted");
+        }
+        showSelectedSands("France", sands.filter(sand => sand.place.country === "FR"));
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
 getSizes = () => {

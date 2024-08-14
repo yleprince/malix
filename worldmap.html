@@ -14,9 +14,13 @@
             <div class="flex items-center justify-center">
                 <h1 class="w-6/12 text-3xl sm:text-4xl md:text-5xl font-medium pt-6 flex justify-center">La Carte</h1>
             </div>
-            <div class="flex items-center justify-center p-4" id="map"></div>
 
-            <div class="flex flex-col items-center justify-center">
+            <div class="flex flex-col lg:flex-row">
+            <div class="flex-grow">
+            <div class="flex items-center justify-center p-4" id="map"></div>
+            </div>
+
+            <div class="flex lg:p-12 flex-col items-center justify-center">
                 <h2 class="w-6/12 text-2xl sm:text-3xl md:text-4xl font-medium pb-4 flex justify-center" id="selected-country"></h2>
                 <div class="stats stats-vertical sm:stats-horizontal shadow" id="stats" hidden>
                     <div class="stat w-36">
@@ -61,6 +65,8 @@
 
             </div>
 
+
+            </div>
 
             <div class="tracking-wide flex items-center justify-center p-10">
                 <div id="collection" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8 xl:gap-10"></div>
