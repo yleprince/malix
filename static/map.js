@@ -114,7 +114,7 @@ function buildMap(highlighted = null) {
 }
 
 getSizes = () => {
-    let width = Math.min(document.getElementById("map").offsetWidth*0.9, 1200);
+    let width = Math.min(document.getElementById("map").offsetWidth, 800)*0.9;
     return [width, width * 0.6];
 }
 buildMap();
