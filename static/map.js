@@ -1,4 +1,3 @@
-
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 loadSand = async () => await fetch("static/sand.json")
@@ -35,7 +34,7 @@ showSelectedSands = (countryName, selected) => {
         const url = "https://sand-collection.s3.eu-central-1.amazonaws.com/resized_200"
         const year = sand.year?` - ${sand.year}`:''
         return `
-            <div class="card">
+            <div class="card cursor-zoom-in">
             <img src='${url}/${sand.picture}' alt="photo">
             <div class="cardText">
             <h4 class="text-lg font-bold">${sand.place.name}</h4>
@@ -44,6 +43,7 @@ showSelectedSands = (countryName, selected) => {
             </div>
             `;
     }).join("");
+    updateModal();
 }
 
 function buildMap(highlighted = null) {
@@ -68,7 +68,7 @@ function buildMap(highlighted = null) {
 
     const cGroup = map.append("g");
 
-    d3.json("static/world.json")
+    return d3.json("static/world.json")
         .then((geojson) => {
             const b = path.bounds(geojson);
             const s = 1 / Math.max((b[1][0] - b[0][0]) / m_width, (b[1][1] - b[0][1]) / m_height);
@@ -118,20 +118,27 @@ function buildMap(highlighted = null) {
         }
         showSelectedSands("France", sands.filter(sand => sand.place.country === "FR"));
     })
-    .catch((error) => {
-        console.error(error);
-    });
 }
 
 getSizes = () => {
     let width = Math.min(document.getElementById("map").offsetWidth, 800)*0.9;
     return [width, width * 0.6];
 }
-buildMap();
+buildMap()
 
 onresize = () => {
     let highlighted = Array.from(document.getElementsByClassName("highlighted"))
-    buildMap(highlighted);
+    buildMap(highlighted)
 };
 
 
+updateModal = () => {
+    const zoomImg = document.getElementById("zoom-img");
+    const my_modal = document.getElementById("my_modal");
+    Array.from(document.getElementsByClassName("card")).forEach(card => {
+        card.addEventListener("click", () => {
+            zoomImg.src = card.getElementsByTagName("img")[0].src.replace("resized_200/", "");
+            my_modal.showModal();
+        });
+    });
+}

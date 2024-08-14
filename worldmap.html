@@ -10,6 +10,21 @@
         <link rel="icon" href="https://sand-collection.s3.eu-central-1.amazonaws.com/palm.png">
     </head>
     <body>
+
+        <dialog id="my_modal" class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <img id="zoom-img" src="" alt="photo">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-primary absolute right-2 top-2">✕</button>
+                </form>
+            </div>
+
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
+
+
         <div class="w-full flex flex-col">
             <div class="flex items-center justify-center">
                 <h1 class="w-6/12 text-3xl sm:text-4xl md:text-5xl font-medium pt-6 flex justify-center">La Carte</h1>

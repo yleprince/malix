@@ -10,6 +10,21 @@
         <link rel="icon" href="https://sand-collection.s3.eu-central-1.amazonaws.com/palm.png">
     </head>
     <body>
+
+        <dialog id="my_modal" class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <img id="zoom-img" src="" alt="photo">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-primary absolute right-2 top-2">✕</button>
+                </form>
+            </div>
+
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
+
+
         <div class="w-full flex flex-col">
             <div class="flex items-center justify-center">
                 <h1 class="w-6/12 text-3xl sm:text-4xl md:text-5xl font-medium pt-24 md:pt-36 md:p-12 flex justify-center">La Collection</h1>
@@ -18,11 +33,12 @@
                 <div id="collection" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8 xl:gap-10"></div>
             </div>
         </div>
-
         <!-- Load d3.js -->
         <script src="static/d3.v5.min.js"></script>
         <script>
+
             const collection = document.getElementById("collection");
+            const zoomImg = document.getElementById("zoom-img");
 
             const delay = ms => new Promise(res => setTimeout(res, ms));
             const loadSands = async () => {
@@ -46,11 +62,11 @@
                                 });
 
                                 collection.innerHTML = sands.map(sand => {
-                                    const url = "https://sand-collection.s3.eu-central-1.amazonaws.com/resized_200"
+                                    const url = "https://sand-collection.s3.eu-central-1.amazonaws.com"
                                     const year = sand.year?` - ${sand.year}`:''
                                     return `
-                                        <div class="card">
-                                        <img src='${url}/${sand.picture}' alt="photo">
+                                        <div class="card cursor-zoom-in">
+                                        <img src='${url}/resized_200/${sand.picture}' alt="photo">
                                         <div class="cardText">
                                         <h4 class="text-lg font-bold">${sand.place.countryFR}</h4>
                                         <h5 class="italic">${sand.place.name}</h5>
@@ -60,12 +76,25 @@
                                         `;
 
                                 }).join("");
-                            }).catch(
+                            })
+                            .then(()=> {
+                                Array.from(document.getElementsByClassName("card")).forEach(card => {
+                                    card.addEventListener("click", () => {
+
+                                        zoomImg.src = card.getElementsByTagName("img")[0].src.replace("resized_200/", "");
+                                        console.log(zoomImg.src);
+                                        my_modal.showModal();
+                                    });
+                                });
+
+                            })
+                            .catch(
                                 (error) => {
                                     console.log(error);
                                 }
                             );
                     })
-        </script>
+
+                    </script>
     </body>
 </html>
